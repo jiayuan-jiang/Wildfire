@@ -1,0 +1,38 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/front/(.*)",
+      "destination": "https://mock.apifox.cn/m1/2401164-0-default/$1"
+    },
+    {
+      "source": "/login_process",
+      "destination": "http://182.254.194.46:8765/login_process"
+    },
+    {
+      "source": "/flask/(.*)",
+      "destination": "https://your-deployed-backend.com/$1"
+    },
+    {
+      "source": "/predict/(.*)",
+      "destination": "https://your-deployed-predict.com/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        }
+      ]
+    }
+  ]
+}
