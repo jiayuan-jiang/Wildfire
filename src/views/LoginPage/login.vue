@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+import {reactive, ref, computed} from "vue";
 import {type FormRules, type FormInstance, } from "element-plus";
 import {login} from "@/api/users";
 import axios from "axios";
@@ -23,7 +23,7 @@ const form = reactive({
 const onSubmit = async () => {
   // isLoading.value = true
   await formLogin.value?.validate().catch((err) => {
-    ElMessage.error("表单校验失败...")
+    ElMessage.error("Form validation failed...")
     isLoading.value = false
     throw err
   })
@@ -40,6 +40,10 @@ const onSubmit = async () => {
   //
   // isLoading.value = false
 
+  const titleContent = computed(() => {
+    return active.value === 1 ? 'Switch to Sign Up' : 'Switch to Login';
+  });
+
   // 正式登录请求
   console.log(form)
   const response = await axios.post('/flask/checkLoginInfo', {
@@ -49,14 +53,14 @@ const onSubmit = async () => {
   console.log(response["data"])
 
   if(response["data"]["status"] == 'fail'){
-    ElMessage.error("登录信息有误！")
-    throw new Error("登录信息有误")
+    ElMessage.error("Invalid login information！")
+    throw new Error("Invalid login information")
   }
   else if(response["data"]["status"] == 'success'){
     console.log(JSON.stringify(response["data"]))
     console.log(typeof JSON.stringify(response["data"]))
     store.saveToken( JSON.stringify(response["data"]))
-    ElMessage.success("登录成功！")
+    ElMessage.success("Login successful！")
     router.push("/")
   }
 
@@ -64,22 +68,22 @@ const onSubmit = async () => {
 }
 
 const onRegister = () => {
-  ElMessage.info("注册功能仍在开发中...")
+  ElMessage.info("Registration is still under development...")
 }
 
 const active = ref(1)
 const buttonContent = computed(() => {
-  return active.value === 1 ? '没有账户？ 点击注册' : '已有账户？ 点击登录';
+  return active.value === 1 ? 'No account? Click to sign up' : 'Have an account? Log in';
 });
 
 // 定义表单校验规则
 const rules = reactive<FormRules>({
   name: [
-    {required: true, message: "登录账号不能为空", trigger: 'blur'}
+    {required: true, message: "Login account cannot be empty", trigger: 'blur'}
   ],
   password: [
-    {required: true, message: "密码不能为空", trigger: 'blur'},
-    {min: 6, max: 18, message: "密码长度不符", trigger: 'blur'}
+    {required: true, message: "Password cannot be empty", trigger: 'blur'},
+    {min: 6, max: 18, message: "Invalid password length", trigger: 'blur'}
   ]
 })
 
@@ -89,6 +93,11 @@ const isLoading = ref(false)
 
 // 提交校验
 const formLogin = ref<FormInstance>()
+
+// 添加计算属性
+const titleContent = computed(() => {
+  return active.value === 1 ? 'Switch to Sign Up' : 'Switch to Login';
+});
 </script>
 
 <template>
@@ -97,21 +106,21 @@ const formLogin = ref<FormInstance>()
     <div class="slider">
       <el-form :model="form" label-width="auto" style="max-width: 600px" :class="active === 1 ? 'form' : 'form hidden'"
                label-position="top" size="large" :rules="rules" ref="formLogin">
-        <div class="title">登录 <b>林火管理系统</b></div>
-        <div class="subtitle">登录管理员用户</div>
+        <div class="title">Login <b>Wild Fire Prediction</b></div>
+        <div class="subtitle">Log in as admin user</div>
 
         <el-divider class="divider"/>
-        <el-form-item label="管理员账号" class="el-form-item" prop="name">
+        <el-form-item label="Administration" class="el-form-item" prop="name">
           <el-input v-model="form.name" class="input"/>
         </el-form-item>
 
-        <el-form-item label="密码" class="el-form-item" prop="password">
+        <el-form-item label="Password" class="el-form-item" prop="password">
           <el-input v-model="form.password" class="input"/>
         </el-form-item>
 
         <el-form-item class="login-foot; el-form-item">
           <el-button type="primary" @click="onSubmit" :loading = "isLoading" class="login-button" onsubmit="">
-            登录
+            Login
           </el-button>
           <!--        <el-button>Cancel</el-button>-->
         </el-form-item>
@@ -120,39 +129,31 @@ const formLogin = ref<FormInstance>()
 
       <el-form :model="form" label-width="auto" style="max-width: 600px" :class="active === 2 ? 'form' : 'form hidden'"
                label-position="top" size="large">
-        <div class="title"><b>注册管理员用户</b></div>
+        <div class="title"><b>Administration</b></div>
         <el-divider class="divider"/>
-        <el-form-item label="注册管理员" class="el-form-item">
+        <el-form-item label="Register admin" class="el-form-item">
           <el-input v-model="form.register" class="input"/>
         </el-form-item>
 
-        <el-form-item label="输入密码" class="el-form-item">
+        <el-form-item label="Enter Password" class="el-form-item">
           <el-input v-model="form.register_password" class="input"/>
         </el-form-item>
 
-        <el-form-item label="输入管理员注册码" class="el-form-item">
+        <el-form-item label="Enter admin registration code" class="el-form-item">
           <el-input v-model="form.register_code" class="input"/>
         </el-form-item>
 
         <el-form-item class="login-foot; el-form-item">
           <el-button type="primary" @click="onRegister" class="login-button">
-            申请注册
+            Apply
           </el-button>
           <!--        <el-button>Cancel</el-button>-->
         </el-form-item>
       </el-form>
 
       <el-card style="width: 480px" shadow="always" :class="active === 1 ? 'card' : 'card active'">
-        <h1 class="h1">切换登录与注册状态</h1>
-        <!--        <el-divider class="divider"/>-->
-        <!--        <div class="content">-->
-        <!--          <div class="left">-->
-        <!--            <b class="text">林火综合管理系统提供集火灾预测与应急处理功能于智能化解决方案，快速响应火灾事件，减少灾害损失</b>-->
-        <!--          </div>-->
-        <!--          <div class="right">-->
-        <!--            <img src="@/assets/landscape.png" alt="" style="width: 200px; height: 150px;" class="img">-->
-        <!--          </div>-->
-        <!--        </div>-->
+        <h1 class="h1">{{ titleContent }}</h1>
+
         <el-button type="primary" @click="active = (active===1) ? 2 : 1"
                    class="swop">
           {{ buttonContent }}

@@ -4,7 +4,6 @@ import mapcanvas from "@/components/cesium/mapcanvas.vue"
 import perdictFire from "@/components/dialogManagement/predictFire.vue"
 import {useTokenStore} from "@/stores/myToken"
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -50,21 +49,18 @@ const router = createRouter({
           component: mapcanvas
         },
         {
-          path: "/:xxx(.*)*",
-          name: "ErrorPage",
-          component: () => import("@/components/ErrorPages/ErrorPage.vue")
-        },
-        {
           path: '/about',
           name: 'about',
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import('../views/AboutView.vue')
         },
       ]
     },
-
+    // 404路由移到最外层最后
+    {
+      path: "/:pathMatch(.*)*",
+      name: "ErrorPage",
+      component: () => import("@/components/ErrorPages/ErrorPage.vue")
+    }
   ]
 })
 
@@ -73,6 +69,7 @@ router.beforeEach((to, from, next)=>{
     const store = useTokenStore()
     if(!store.token.access_token){
       next({name: "login", query: {redirect: to.fullPath}})
+      return // 添加return，防止继续执行
     }
   }
   next()

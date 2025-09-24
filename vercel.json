@@ -13,26 +13,15 @@
     },
     {
       "source": "/flask/(.*)",
-      "destination": "https://your-deployed-backend.com/$1"
+      "destination": "https://your-backend-url.com/$1"
     },
     {
       "source": "/predict/(.*)",
-      "destination": "https://your-deployed-predict.com/$1"
-    }
-  ],
-  "headers": [
+      "destination": "https://your-predict-url.com/$1"
+    },
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
-        }
-      ]
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
