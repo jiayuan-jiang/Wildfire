@@ -62,17 +62,17 @@ export default defineConfig({
                 changeOrigin: true
             },
             "/login_process": {
-                target: "http://182.254.194.46:8765/login_process",
+                target: "https://wildfirebackend.onrender.com",
                 changeOrigin: true
             },
             "/flask": {
-                target: "http://localhost:8764",
+                target: "https://wildfirebackend.onrender.com",
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/flask/, '')
                 //将 '/api' 替换为空
             },
             "/predict": {
-                target: "http://localhost:8765",
+                target: "https://wildfirebackend.onrender.com",
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/predict/, '')
                 //将 '/api' 替换为空
