@@ -2,11 +2,6 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "functions": {
-    "api/flask.py": {
-      "runtime": "@vercel/python@4.1.0"
-    }
-  },
   "rewrites": [
     {
       "source": "/front/(.*)",

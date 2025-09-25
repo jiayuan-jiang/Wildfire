@@ -339,47 +339,5 @@ def get_station():
     return flask.jsonify(dic)
 
 
-class handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        # 解析URL路径
-        path = self.path.split('?')[0]
-        query = urllib.parse.parse_qs(self.path.split('?')[1] if '?' in self.path else '')
-
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-
-        if path.endswith('/Fire_Predict'):
-            # 处理火灾预测
-            try:
-                x = float(query.get('x', [0])[0])
-                y = float(query.get('y', [0])[0])
-                # 你的预测逻辑...
-                result = {"message": f"Predicting fire at {x}, {y}"}
-                self.wfile.write(json.dumps(result).encode())
-            except Exception as e:
-                error = {"error": str(e)}
-                self.wfile.write(json.dumps(error).encode())
-        else:
-            # 默认响应
-            response = {"message": "Flask API is working!"}
-            self.wfile.write(json.dumps(response).encode())
-
-    def do_POST(self):
-        # 处理POST请求
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-
-        # 你的POST处理逻辑...
-        response = {"message": "POST received"}
-        self.wfile.write(json.dumps(response).encode())
-
-
 if __name__ == "__main__":
     app.run(host='localhost', port=8765)
