@@ -9,15 +9,15 @@
     },
     {
       "source": "/login_process",
-      "destination": "/api/fire_predict.py"
+      "destination": "https://wildfirebackend.onrender.com/login_process/$1"
     },
     {
       "source": "/flask/(.*)",
-      "destination": "/api/fire_predict.py"
+      "destination": "https://wildfirebackend.onrender.com/$1"
     },
     {
       "source": "/predict/(.*)",
-      "destination": "/api/fire_predict.py"
+      "destination": "https://wildfirebackend.onrender.com/$1"
     },
     {
       "source": "/(.*)",
