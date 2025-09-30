@@ -806,3 +806,78 @@ watch(
   overflow: hidden;
 }
 </style>
+
+<style>
+.control-panel {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+
+
+.toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(50, 50, 93, 0.35) 0px 15px 30px -5px,
+  rgba(0, 0, 0, 0.4) 0px 10px 20px -10px;
+}
+
+/* 控制面板卡片 - 毛玻璃效果 */
+.input-card {
+  background-color: rgba(238, 238, 238, 0.5);
+  backdrop-filter: blur(15px) saturate(1.5);
+  -webkit-backdrop-filter: blur(15px) saturate(1.5);
+  border-radius: 12px;
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 20px 40px -10px,
+  rgba(0, 0, 0, 0.3) 0px 15px 30px -15px,
+  rgba(212, 217, 222, 0.35) 0px -2px 6px 0px inset;
+  padding: 20px;
+  margin-top: 10px;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* 滑入动画 */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 控制项样式 */
+.input-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  color: rgb(22, 38, 53);
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.input-item:hover {
+  background-color: rgba(54, 99, 117, 0.1);
+  padding-left: 15px;
+}
+
+/* 复选框样式优化 */
+.input-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: #366375;
+  border-radius: 4px;
+}
+
+/* 展开状态 */
+.control-panel.open {
+  /* 可以添加展开时的额外样式 */
+}
+</style>
