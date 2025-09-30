@@ -110,7 +110,7 @@ const titleContent = computed(() => {
         <div class="subtitle">Log in as admin user</div>
 
         <el-divider class="divider"/>
-        <el-form-item label="Administration" class="el-form-item" prop="name">
+        <el-form-item label="Administration Account" class="el-form-item" prop="name">
           <el-input v-model="form.name" class="input"/>
         </el-form-item>
 

@@ -93,8 +93,8 @@ const handleAnticipate = async () => {
 }
 
 #mapView {
-  height: 100vh;
   width: 100%;
+  height: calc(100vh - 85px);
 }
 
 :deep(.leaflet-control-attribution) {
@@ -102,8 +102,8 @@ const handleAnticipate = async () => {
 }
 
 .container {
-  width: 170vh;
-  height: 90vh;
+  width: 100%;
+  height: calc(100vh - 85px);
   padding: 0;
   border: 0;
   overflow: hidden;

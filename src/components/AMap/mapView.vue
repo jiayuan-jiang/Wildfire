@@ -690,8 +690,8 @@ watch(
 
 <style scoped>
 #container {
-  width: 170vh;
-  height: 90vh;
+  width: 100%;
+  height: calc(100vh - 85px);
   padding: 0;
   border: 0;
   overflow: hidden;
